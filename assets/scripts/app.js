@@ -3,7 +3,7 @@
  * =================================
  */
 const addModal = document.querySelector(`.modal`);
-const backdrop = document.querySelector(`#backdrop`);
+const backdrop = document.querySelector(`header button`);
 const btnAddMovie = document.querySelector(`.btnAddMovie`);
 const btnCancelMovie = document.querySelector(`.btn--passive`);
 const btnAddNewMovie = document.querySelector(`.btn--success`);
