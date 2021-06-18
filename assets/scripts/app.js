@@ -51,7 +51,7 @@ const handleAddNewMovie = () => {
     : alert(`Some of your fields are empty`);
 
   allMovies.push(moviesDetails);
-  handleCloseModal();
+  handleClearInputs();
   console.log(allMovies);
 };
 
