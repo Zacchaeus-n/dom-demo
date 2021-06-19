@@ -2,9 +2,9 @@
  * CONSTANTS
  * =================================
  */
-const addModal = document.querySelector(`.modal`);
-const backdrop = document.querySelector(`header button`);
-const btnAddMovie = document.querySelector(`.btnAddMovie`);
+const addModal = document.querySelector(`#add-modal`);
+const backdrop = document.querySelector(`#backdrop`);
+const btnAddMovie = document.querySelector(`header button`);
 const btnCancelMovie = document.querySelector(`.btn--passive`);
 const btnAddNewMovie = document.querySelector(`.btn--success`);
 
@@ -38,21 +38,24 @@ const handleHideBackdrop = () => {
 const handleAddNewMovie = () => {
   const movieTitle = document.querySelector(`#title`).value.trim();
   const imageUrl = document.querySelector(`#image-url`).value.trim();
-  const rating = document.querySelector(`#rating`).value;
+  const rating = document.querySelector(`#rating`).valueAsNumber;
   let moviesDetails;
   movieTitle !== "" && imageUrl !== "" && rating !== ""
-    ? parseInt(rating) >= 1 && parseInt(rating) <= 5
+    ? rating >= 1 && rating <= 5
       ? (moviesDetails = {
-          title: movieTitle,
-          imageUrl: imageUrl,
-          rating: rating,
+          movieTitle,
+          imageUrl,
+          rating,
         })
       : alert(`Rating must be between 0 and 6`)
     : alert(`Some of your fields are empty`);
 
   allMovies.push(moviesDetails);
   handleClearInputs();
+  handleHideBackdrop();
   console.log(allMovies);
+  removeSection();
+  displayMovieList(moviesDetails);
 };
 
 const handleClearInputs = () => {
@@ -61,10 +64,30 @@ const handleClearInputs = () => {
   document.querySelector(`#rating`).value = "";
 };
 
-// const handleEntryText = () => {
-//     const entryText = document.querySelector(`#entry-text`);
-//     allMovies.length ===
-// };
+// entryText.style.display = "none";
+const removeSection = () => {
+  const entryText = document.querySelector(`#entry-text`);
+  allMovies.length === 0
+    ? (entryText.style.display = "block")
+    : (entryText.style.display = "none");
+};
+
+const displayMovieList = (movieObject) => {
+  const movieListUl = document.querySelector(`#movie-list`);
+  const movieLi = document.createElement(`li`);
+  movieLi.className = "movie-element";
+  movieLi.innerHTML = `
+      <div class="movie-element__image">
+        <img src="${movieObject.imageUrl}" alt="${movieObject.movieTitle}">
+      </div>
+      <div class="movie-element__info">
+        <h2>${movieObject.movieTitle}</h2>
+        <h2>${movieObject.rating}</h2>
+      </div>
+    `;
+
+  movieListUl.appendChild(movieLi);
+};
 
 /**=================================
  * EVENTS
@@ -80,3 +103,9 @@ btnAddNewMovie.addEventListener(`click`, handleAddNewMovie);
  * CONSTANTS
  * =================================
  */
+
+// const clearInputs = () => {
+//     for (const input of inputs) {
+//         input.value = ""
+//     }
+// }
